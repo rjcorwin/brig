@@ -1,0 +1,29 @@
+{
+  "name": "drift",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Drift: MCPx Agent Orchestration Platform",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/drift.git"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "dev:cli": "npm run dev -w drift-cli",
+    "dev:studio": "npm run dev -w drift-studio",
+    "dev:server": "npm run dev -w drift-server",
+    "clean": "npm run clean --workspaces --if-present",
+    "drift": "npm run drift -w drift-cli"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
