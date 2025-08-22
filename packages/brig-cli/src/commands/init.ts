@@ -1,59 +1,32 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as os from 'os';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import * as path from 'path';
+import { Sea } from '../lib/Sea';
 
-export async function initConfig(): Promise<void> {
-  const baseDir = path.join(os.homedir(), '.mcpx');
-  
-  if (await fs.pathExists(baseDir)) {
-    const answers = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'reinit',
-        message: 'MCPx configuration already exists. Reinitialize?',
-        default: false
-      }
-    ]);
-
-    if (!answers.reinit) {
-      console.log('Initialization cancelled');
-      return;
-    }
+export async function initCommand(projectPath?: string, options: any = {}) {
+  try {
+    const seaPath = projectPath || process.cwd();
+    const seaName = options.name || path.basename(path.resolve(seaPath));
+    
+    console.log(chalk.blue('🌊 Creating new sea...'));
+    
+    const sea = await Sea.init(seaPath, seaName);
+    
+    await Sea.registerSea(seaPath);
+    await Sea.setCurrentSea(seaPath);
+    
+    console.log();
+    console.log(chalk.green('✨ Your sea is ready!'));
+    console.log();
+    console.log('Next steps:');
+    console.log(chalk.cyan('  1. Set your harbor:'), chalk.gray('brig harbor <mcpx-url>'));
+    console.log(chalk.cyan('  2. Create an island:'), chalk.gray('brig island create <name>'));
+    console.log(chalk.cyan('  3. Recruit crew:'), chalk.gray('brig recruit <role> <name>'));
+    console.log(chalk.cyan('  4. Set sail:'), chalk.gray('brig sail <crew> <island>'));
+    console.log();
+    console.log(chalk.blue('⚓ Fair winds and following seas!'));
+    
+  } catch (error: any) {
+    console.error(chalk.red('⚠️  Failed to initialize sea:'), error.message);
+    process.exit(1);
   }
-
-  console.log(chalk.blue('Initializing MCPx configuration...'));
-
-  // Create directory structure
-  const dirs = [
-    baseDir,
-    path.join(baseDir, 'agents'),
-    path.join(baseDir, 'templates'),
-    path.join(baseDir, 'runtime'),
-    path.join(baseDir, 'logs')
-  ];
-
-  for (const dir of dirs) {
-    await fs.ensureDir(dir);
-  }
-
-  // Create default config
-  const config = {
-    version: '0.1.0',
-    defaults: {
-      serverUrl: 'ws://localhost:3000',
-      topic: 'room:general'
-    },
-    createdAt: new Date().toISOString()
-  };
-
-  await fs.writeJson(path.join(baseDir, 'config.json'), config, { spaces: 2 });
-
-  console.log(chalk.green('✓ MCPx configuration initialized'));
-  console.log(chalk.gray(`  Configuration directory: ${baseDir}`));
-  console.log(chalk.blue('\nNext steps:'));
-  console.log('  1. Create an agent: mcpx agent create my-agent');
-  console.log('  2. Start the agent: mcpx agent start my-agent');
-  console.log('  3. List agents: mcpx agent list');
 }
