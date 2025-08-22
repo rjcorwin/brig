@@ -27,7 +27,7 @@ pids/
 *.pid
 *.seed
 *.pid.lock
-~/.drift/runtime/
+~/.brig/runtime/
 
 # Testing
 coverage/
@@ -69,20 +69,20 @@ temp/
 .tmp/
 
 # Drift Studio specific
-packages/drift-studio/release/
-packages/drift-studio/dist/
-packages/drift-studio/out/
-packages/drift-studio/.vite/
-packages/drift-studio/*.log
-packages/drift-studio/*.dmg
-packages/drift-studio/*.zip
-packages/drift-studio/*.blockmap
-packages/drift-studio/*.AppImage
-packages/drift-studio/*.snap
-packages/drift-studio/*.deb
-packages/drift-studio/*.rpm
-packages/drift-studio/*.exe
-packages/drift-studio/*.msi
+packages/brig-studio/release/
+packages/brig-studio/dist/
+packages/brig-studio/out/
+packages/brig-studio/.vite/
+packages/brig-studio/*.log
+packages/brig-studio/*.dmg
+packages/brig-studio/*.zip
+packages/brig-studio/*.blockmap
+packages/brig-studio/*.AppImage
+packages/brig-studio/*.snap
+packages/brig-studio/*.deb
+packages/brig-studio/*.rpm
+packages/brig-studio/*.exe
+packages/brig-studio/*.msi
 
 # Electron
 .electron/
@@ -97,5 +97,5 @@ lerna-debug.log
 .changelog/
 
 # User configuration (but keep templates)
-!packages/drift-cli/templates/
-~/.drift/
+!packages/brig-cli/templates/
+~/.brig/

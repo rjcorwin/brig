@@ -1,10 +1,10 @@
 {
-  "name": "drift-cli",
+  "name": "@mcpxp/brig-cli",
   "version": "0.1.0",
-  "description": "Drift CLI - Agent orchestration and management platform",
+  "description": "Brig CLI - Agent orchestration and management platform",
   "main": "dist/index.js",
   "bin": {
-    "drift": "./dist/cli.js"
+    "brig": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc",

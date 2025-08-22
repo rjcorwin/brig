@@ -1,7 +1,7 @@
 {
-  "name": "@drift/agent-sdk",
+  "name": "@mcpxp/brig-agent-sdk",
   "version": "0.1.0",
-  "description": "Drift Agent SDK - Build MCPx-native agents",
+  "description": "Brig Agent SDK - Build MCPx-native agents",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,6 +12,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@mcpxp/sdk-typescript": "*",
     "ws": "^8.14.2",
     "eventemitter3": "^5.0.1",
     "zod": "^3.22.4",

@@ -1,33 +1,21 @@
 import { z } from 'zod';
 
-// MCPx Envelope types
-export const EnvelopeSchema = z.object({
-  protocol: z.literal('mcp-x/v0'),
-  id: z.string(),
-  ts: z.string(),
-  from: z.string(),
-  to: z.array(z.string()).optional(),
-  kind: z.enum(['mcp', 'presence', 'system', 'chat']),
-  correlation_id: z.string().optional(),
-  payload: z.any()
-});
+// Re-export base types from SDK
+export type { Envelope, MCPxEvents } from '@mcpxp/sdk-typescript';
 
-export type Envelope = z.infer<typeof EnvelopeSchema>;
+// Agent-specific types
 
 // Peer types
 export interface Peer {
   id: string;
   name?: string;
-  kind: 'human' | 'agent' | 'robot';
-  tools: Tool[];
-  status: 'online' | 'away' | 'offline';
-  lastSeen: Date;
+  status: 'active' | 'idle' | 'offline';
+  capabilities: Tool[];
   metadata?: Record<string, any>;
 }
 
-// Tool types
+// Tool types  
 export interface Tool {
-  peerId: string;
   name: string;
   description?: string;
   inputSchema?: any;
@@ -47,92 +35,24 @@ export interface ToolResult {
   error?: string;
 }
 
-// Chat types
-export interface ChatMessage {
-  from: string;
-  text: string;
-  format: 'plain' | 'markdown';
-  timestamp: Date;
-}
-
-// Presence types
-export interface PresenceEvent {
-  event: 'join' | 'leave' | 'heartbeat';
-  participant: {
-    id: string;
-    name?: string;
-    kind: 'human' | 'agent' | 'robot';
-    metadata?: Record<string, any>;
-  };
-  timestamp: string;
-}
-
-// System types
-export interface SystemWelcome {
-  event: 'welcome';
-  participants: Array<{
-    id: string;
-    name?: string;
-    kind: 'human' | 'agent' | 'robot';
-    metadata?: Record<string, any>;
-  }>;
-  history?: any;
-}
-
-// Connection types
-export interface MCPxConfig {
-  serverUrl: string;
-  topic: string;
-  participantId: string;
-  participantName?: string;
-  authToken: string;
-  reconnect?: boolean;
-  reconnectDelay?: number;
-  reconnectAttempts?: number;
-  heartbeatInterval?: number;
-}
-
-// Event types
-export interface MCPxEvents {
-  connected: () => void;
-  disconnected: (reason?: string) => void;
-  error: (error: Error) => void;
-  peerJoined: (peer: Peer) => void;
-  peerLeft: (peerId: string) => void;
-  peerUpdated: (peer: Peer) => void;
-  peerReady: (peer: Peer) => void;
-  chat: (message: ChatMessage) => void;
-  toolCall: (request: ToolCallRequest) => Promise<any>;
-  message: (envelope: Envelope) => void;
-}
-
+// Tool call protocol
 export interface ToolCallRequest {
+  id: string;
   from: string;
-  tool: string;
-  params: any;
-  requestId: string | number;
-}
-
-// Topic context
-export interface TopicContext {
-  topic: string;
-  participantId: string;
-  participants: Map<string, Peer>;
-  messageHistory: Envelope[];
-  availableTools: Map<string, Tool[]>;
-}
-
-// MCP types
-export interface MCPRequest {
-  jsonrpc: '2.0';
-  id?: string | number;
   method: string;
-  params?: any;
+  params: any;
+}
+
+// MCP Protocol types
+export interface MCPRequest {
+  id: string;
+  from: string;
+  method: string;
+  params: any;
 }
 
 export interface MCPResponse {
-  jsonrpc: '2.0';
-  id: string | number;
+  id: string;
   result?: any;
   error?: {
     code: number;
@@ -141,8 +61,11 @@ export interface MCPResponse {
   };
 }
 
-export interface MCPNotification {
-  jsonrpc: '2.0';
-  method: string;
-  params?: any;
+// Agent-specific events
+export interface AgentEvents {
+  peerJoined: (peer: Peer) => void;
+  peerLeft: (peer: Peer) => void;
+  peerUpdated: (peer: Peer) => void;
+  toolCall: (request: ToolCallRequest) => void;
+  toolResult: (result: ToolResult) => void;
 }

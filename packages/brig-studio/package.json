@@ -1,7 +1,7 @@
 {
-  "name": "drift-studio",
+  "name": "@mcpxp/brig-studio",
   "version": "0.1.0",
-  "description": "Drift Studio - Visual management interface for agent orchestration",
+  "description": "Brig Studio - Visual management interface for agent orchestration",
   "main": "dist/main/index.js",
   "scripts": {
     "dev": "vite",

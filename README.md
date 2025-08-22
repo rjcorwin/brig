@@ -1,14 +1,14 @@
-# Drift: MCPx Agent Orchestration Platform
+# Brig: MCPx Agent Orchestration Platform
 
-Drift is a comprehensive orchestration platform for MCPx-based multi-agent systems. Like Docker Desktop for containers, Drift provides both core orchestration capabilities and optional UI tooling for managing multi-agent workflows.
+Brig (short for Brigantine) is a comprehensive orchestration platform for MCPx-based multi-agent systems. Like Docker Desktop for containers, Brig provides both core orchestration capabilities and optional UI tooling for managing multi-agent workflows.
 
 ## Repository Structure
 
 ```
-drift/
+brig/
 ├── packages/       # Core packages
-│   ├── drift-cli/    # CLI and orchestration engine
-│   ├── drift-studio/ # Desktop management app
+│   ├── brig-cli/     # CLI and orchestration engine
+│   ├── brig-studio/  # Desktop management app
 │   └── agent-sdk/    # Agent development SDK
 ├── agents/         # Example agents
 └── examples/       # Configuration examples
@@ -24,31 +24,31 @@ npm install
 npm run build
 
 # Start the system
-npx drift up
+npx brig up
 
-# Open Drift Studio
+# Open Brig Studio
 npm run dev:studio
 ```
 
 ## Key Commands
 
 ```bash
-drift up              # Start the MCPx system
-drift down            # Stop everything
-drift agent create    # Create a new agent
-drift agent list      # List all agents
-drift status          # System status
+brig up              # Start the MCPx system
+brig down            # Stop everything
+brig agent create    # Create a new agent
+brig agent list      # List all agents
+brig status          # System status
 ```
 
 ## Packages
 
-- **drift-cli** - Command-line interface and orchestration engine
-- **drift-studio** - Electron-based desktop application for visual management
-- **@drift/agent-sdk** - SDK for building MCPx-native agents
+- **@mcpxp/brig-cli** - Command-line interface and orchestration engine
+- **@mcpxp/brig-studio** - Electron-based desktop application for visual management
+- **@mcpxp/brig-agent-sdk** - SDK for building MCPx-native agents
 
 ## Architecture
 
-Drift manages:
+Brig manages:
 - MCPx gateway server
 - Multiple agent instances
 - MCP server bridges
